@@ -45,8 +45,19 @@ public class Main {
                     }
                     break;
                 }
-                System.out.print("비밀번호 : ");
-                String loginPw = sc.nextLine();
+                String loginPw = null;
+                while (true) {
+                    System.out.print("비밀번호 : ");
+                    loginPw = sc.nextLine();
+                    System.out.print("비밀번호 확인 : ");
+                    String loginPwConfirm = sc.nextLine();
+
+                    if (loginPw.equals(loginPwConfirm) == false) {
+                        System.out.println("비밀번호를 다시 확인해주세요.");
+                        continue;
+                    }
+                    break;
+                }
                 System.out.print("이름 : ");
                 String name = sc.nextLine();
 
@@ -174,6 +185,7 @@ public class Main {
         sc.close();
     }
 
+    // loginId 중복확인
     private static boolean isjoinableLoginId(String loginId) {
         for (Member member : members) {
             if(member.getLoginId().equals(loginId)){
