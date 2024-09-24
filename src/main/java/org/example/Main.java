@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
 
     static List<Article> articles = new ArrayList<>(); // 저장소
+    static List<Member> members = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -16,6 +17,7 @@ public class Main {
         makeTestData();
 
         int lastArticle = 3;
+        int lastMemberId = 0;
 
         while (true) {
             System.out.print("명령어 ) ");
@@ -28,8 +30,33 @@ public class Main {
             if (cmd.equals("exit")) {
                 break;
             }
+            if (cmd.equals("member join")) {
+                System.out.println("== 회원 가입==");
+                int id = lastMemberId + 1;
+                String regDate = Util.getNow();
+                
+                String loginId = null;
+                while(true) {
+                    System.out.print("로그인 아이디 : ");
+                    loginId = sc.nextLine().trim();
+                    if (isjoinableLoginId(loginId) == false) {
+                        System.out.println("이미 사용중인 아이디 입니다.");
+                        continue;
+                    }
+                    break;
+                }
+                System.out.print("비밀번호 : ");
+                String loginPw = sc.nextLine();
+                System.out.print("이름 : ");
+                String name = sc.nextLine();
 
-            if (cmd.equals("article write")) {
+                Member member = new Member(id, regDate, loginId, loginPw, name);
+                members.add(member);
+
+                System.out.println(id + "번 회원이 가입되었습니다.");
+                lastMemberId++;
+
+            } else if (cmd.equals("article write")) {
                 System.out.println("== 게시글 작성==");
                 int id = lastArticle + 1;
                 String regDate = Util.getNow();
@@ -147,6 +174,15 @@ public class Main {
         sc.close();
     }
 
+    private static boolean isjoinableLoginId(String loginId) {
+        for (Member member : members) {
+            if(member.getLoginId().equals(loginId)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static Article getArticleById(int id) {
 
 //        for (int i = 0; i < articles.size(); i++) {
@@ -225,5 +261,61 @@ class Article {
 
     public void setBody(String body) {
         this.body = body;
+    }
+}
+
+class Member {
+    private int id;
+    private String regDate;
+    private String loginId;
+    private String loginPw;
+    private String name;
+
+    public Member(int id, String regDate, String loginId, String loginPw, String name) {
+        this.id = id;
+        this.regDate = regDate;
+        this.loginId = loginId;
+        this.loginPw = loginPw;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public String getLoginPw() {
+        return loginPw;
+    }
+
+    public void setLoginPw(String loginPw) {
+        this.loginPw = loginPw;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
