@@ -1,13 +1,17 @@
-package org.example;
+package org.example.controller;
+
+import org.example.dto.Member;
+import org.example.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MemberController {
+public class MemberController extends Controller {
 
-    Scanner sc;
-    List<Member> members;
+    private Scanner sc;
+    private List<Member> members;
+    private String cmd;
 
     private int lastMemberId = 3;
 
@@ -16,7 +20,20 @@ public class MemberController {
         members = new ArrayList<>();
     }
 
-    public void dojoin() {
+    public void doAction(String cmd, String actionMethodName) {
+        this.cmd = cmd;
+
+        switch (actionMethodName) {
+            case "join":
+                dojoin();
+                break;
+            default:
+                System.out.println("명령어 확인 (actionMethodName) 오류");
+                break;
+        }
+    }
+
+    private void dojoin() {
         System.out.println("== 회원 가입==");
         int id = lastMemberId + 1;
         String regDate = Util.getNow();
