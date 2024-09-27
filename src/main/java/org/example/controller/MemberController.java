@@ -12,6 +12,7 @@ public class MemberController extends Controller {
     private Scanner sc;
     private List<Member> members;
     private String cmd;
+    private Member loginedMember = null;
 
     private int lastMemberId = 3;
 
@@ -27,11 +28,63 @@ public class MemberController extends Controller {
             case "join":
                 dojoin();
                 break;
+            case "login":
+                doLogin();
+                break;
+            case "logout":
+                doLogout();
+                break;
             default:
                 System.out.println("명령어 확인 (actionMethodName) 오류");
                 break;
         }
     }
+
+    private boolean isLogined() {
+        return loginedMember != null;
+    }
+
+    private void doLogout() {
+        if (!isLogined()) {
+            System.out.println("이미 로그아웃 상태입니다.");
+            return;
+        }
+        loginedMember = null;
+
+        System.out.println("로그아웃 되었습니다.");
+    }
+
+    private void doLogin() {
+        if (isLogined()) {
+            System.out.println("이미 로그인 상태입니다.");
+            return;
+        }
+        System.out.println("== 로그인 ==");
+
+
+        System.out.print("로그인 아이디 : ");
+        String loginId = sc.nextLine().trim();
+        System.out.print("비밀번호 : ");
+        String loginPw = sc.nextLine();
+
+        // 회원가입이 되어있는지 확인. -> 사용자가 입력한 로그인 아이디와 일치하는 회원이 가입되어 있는지 확인
+        Member member = getMemberByLoginId(loginId);
+
+        if (member == null) {
+            System.out.println("일치하는 회원이 없습니다.");
+            return;
+        }
+        // 회원가입된 회원이라면 -> 비밀번호가 일치하는지 확인
+        if (member.getLoginPw().equals(loginPw) == false){
+            System.out.println("비밀번호가 틀렸습니다.");
+            return;
+        }
+        loginedMember = member; // 누가 로그인 했는지 저장
+
+        System.out.printf("%s님 로그인 성공\n", member.getName());
+
+    }
+
 
     private void dojoin() {
         System.out.println("== 회원 가입==");
@@ -78,6 +131,15 @@ public class MemberController extends Controller {
             }
         }
         return true;
+    }
+
+    private Member getMemberByLoginId(String loginId) {
+        for (Member member : members) {
+            if(member.getLoginId().equals(loginId)){
+                return member;
+            }
+        }
+        return null;
     }
 
     public void makeTestData() {
