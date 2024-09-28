@@ -12,7 +12,6 @@ public class MemberController extends Controller {
     private Scanner sc;
     private List<Member> members;
     private String cmd;
-    private Member loginedMember = null;
 
     private int lastMemberId = 3;
 
@@ -26,12 +25,27 @@ public class MemberController extends Controller {
 
         switch (actionMethodName) {
             case "join":
+                // 로그인 상태에서 회원가입을 막는다.
+                if (isLogined()) {
+                    System.out.println("이미 로그인 상태입니다.");
+                    return;
+                }
                 dojoin();
                 break;
             case "login":
+                // 로그인 상태에서 중복 로그인을 막는다.
+                if (isLogined()) {
+                    System.out.println("이미 로그인 상태입니다.");
+                    return;
+                }
                 doLogin();
                 break;
             case "logout":
+                // 로그아웃 상태에서 다시 로그아웃을 방지한다.
+                if (!isLogined()) {
+                    System.out.println("이미 로그아웃 상태입니다.");
+                    return;
+                }
                 doLogout();
                 break;
             default:
@@ -40,25 +54,15 @@ public class MemberController extends Controller {
         }
     }
 
-    private boolean isLogined() {
-        return loginedMember != null;
-    }
 
     private void doLogout() {
-        if (!isLogined()) {
-            System.out.println("이미 로그아웃 상태입니다.");
-            return;
-        }
         loginedMember = null;
 
         System.out.println("로그아웃 되었습니다.");
     }
 
     private void doLogin() {
-        if (isLogined()) {
-            System.out.println("이미 로그인 상태입니다.");
-            return;
-        }
+
         System.out.println("== 로그인 ==");
 
 
