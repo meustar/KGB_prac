@@ -44,6 +44,32 @@ public class App {
 
             String actionMethodName = cmdBits[1];
 
+            // Controller로 진입 전 App에서 로그인 체크먼저 하기.
+            String forLoginCheck = controllerName + "/" + actionMethodName;
+
+            switch (forLoginCheck) {
+                case "article/write":
+                case "article/delete":
+                case "article/modify":
+                case "member/logout":
+                    // 위 기능들은 로그인을 했을때만 가능하도록.
+                    if(Controller.isLogined() == false) {
+                        System.out.println("로그인이 필요합니다.");
+                        continue;
+                    }
+                    break;
+            }
+            switch (forLoginCheck) {
+                case "member/login":
+                case "member/join":
+                    // 위 기능들은 로그아웃 상태에서만 할 수 있도록.
+                    if(Controller.isLogined()) {
+                        System.out.println("로그아웃이 필요합니다");
+                        continue;
+                    }
+                    break;
+            }
+
             if (controllerName.equals("article")) {
                 controller = articleController;
             } else if (controllerName.equals("member")) {

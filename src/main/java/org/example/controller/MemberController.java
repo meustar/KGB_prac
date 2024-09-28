@@ -25,27 +25,12 @@ public class MemberController extends Controller {
 
         switch (actionMethodName) {
             case "join":
-                // 로그인 상태에서 회원가입을 막는다.
-                if (isLogined()) {
-                    System.out.println("이미 로그인 상태입니다.");
-                    return;
-                }
                 dojoin();
                 break;
             case "login":
-                // 로그인 상태에서 중복 로그인을 막는다.
-                if (isLogined()) {
-                    System.out.println("이미 로그인 상태입니다.");
-                    return;
-                }
                 doLogin();
                 break;
             case "logout":
-                // 로그아웃 상태에서 다시 로그아웃을 방지한다.
-                if (!isLogined()) {
-                    System.out.println("이미 로그아웃 상태입니다.");
-                    return;
-                }
                 doLogout();
                 break;
             default:
@@ -57,15 +42,11 @@ public class MemberController extends Controller {
 
     private void doLogout() {
         loginedMember = null;
-
         System.out.println("로그아웃 되었습니다.");
     }
 
     private void doLogin() {
-
         System.out.println("== 로그인 ==");
-
-
         System.out.print("로그인 아이디 : ");
         String loginId = sc.nextLine().trim();
         System.out.print("비밀번호 : ");
