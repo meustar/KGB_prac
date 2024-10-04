@@ -1,6 +1,8 @@
 package org.example.controller;
 
+import org.example.articleManager.Container;
 import org.example.dto.Article;
+import org.example.dto.Member;
 import org.example.util.Util;
 
 import java.util.ArrayList;
@@ -15,9 +17,11 @@ public class ArticleController extends Controller {
 
     private int lastArticle = 3;
 
+    List<Member> members = Container.memberDao.members;
+
     public ArticleController(Scanner sc) {
         this.sc = sc;
-        articles = new ArrayList<>();
+        articles = Container.articleDao.articles;
     }
 
     public void doAction(String cmd, String actionMethodName) {
@@ -90,13 +94,23 @@ public class ArticleController extends Controller {
             }
         }
 
+        String writerName = null;
+
         System.out.println("   번호   /      날짜      /   작성자   /   제목   /   내용");
         for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
             Article article = forPrintArticles.get(i);
+
+            for(Member member : members) {
+                if(article.getMemberId() == member.getId()) {
+                    writerName = member.getName();
+                    break;
+                }
+            }
+
             if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) { // 같은 날이라면.
-                System.out.printf("   %d   /      %s     /     %d     /     %s     /     %s   \n", article.getId(), article.getRegDate().split(" ")[1], article.getMemberId(), article.getTitle(), article.getBody());
+                System.out.printf("   %d   /      %s     /     %s     /     %s     /     %s   \n", article.getId(), article.getRegDate().split(" ")[1], writerName, article.getTitle(), article.getBody());
             } else {
-                System.out.printf("   %d   /      %s     /     %d     /     %s     /     %s   \n", article.getId(), article.getRegDate().split(" ")[0], article.getMemberId(), article.getTitle(), article.getBody());
+                System.out.printf("   %d   /      %s     /     %s     /     %s     /     %s   \n", article.getId(), article.getRegDate().split(" ")[0], writerName, article.getTitle(), article.getBody());
             }
         }
     }
