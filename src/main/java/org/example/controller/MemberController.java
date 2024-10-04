@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.articleManager.Container;
 import org.example.dto.Member;
+import org.example.service.MemberService;
 import org.example.util.Util;
 
 import java.util.List;
@@ -10,14 +11,17 @@ import java.util.Scanner;
 public class MemberController extends Controller {
 
     private Scanner sc;
-    private List<Member> members;
+//    private List<Member> members;
     private String cmd;
+
+    private MemberService memberService;
 
     private int lastMemberId = 3;
 
     public MemberController(Scanner sc) {
-        this.sc = sc;
+        this.memberService = Container.memberService;
         members = Container.memberDao.members;
+        this.sc = sc;
     }
 
     public void doAction(String cmd, String actionMethodName) {
@@ -103,7 +107,7 @@ public class MemberController extends Controller {
         String name = sc.nextLine();
 
         Member member = new Member(id, regDate, loginId, loginPw, name);
-        members.add(member);
+        memberService.add(member);
 
         System.out.println(id + "번 회원이 가입되었습니다.");
         lastMemberId++;
@@ -129,9 +133,9 @@ public class MemberController extends Controller {
 
     public void makeTestData() {
         System.out.println("회원 테스트 데이터 생성");
-        members.add(new Member(1, Util.getNow(), "test1", "test1", "김철수"));
-        members.add(new Member(2, Util.getNow(), "test2", "test2", "김영희"));
-        members.add(new Member(3, Util.getNow(), "test3", "test3", "홍길동"));
+        memberService.add(new Member(1, Util.getNow(), "test1", "test1", "김철수"));
+        memberService.add(new Member(2, Util.getNow(), "test2", "test2", "김영희"));
+        memberService.add(new Member(3, Util.getNow(), "test3", "test3", "홍길동"));
     }
 
 }

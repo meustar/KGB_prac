@@ -17,4 +17,9 @@ public class MemberService {
     public List<Member> getMembers() {
         return  memberDao.getMambers();
     }
+
+    public void add(Member member) {
+        memberDao.add(member);
+    }
+
 }

@@ -15,4 +15,8 @@ public class MemberDao {
     public List<Member> getMambers() {
         return members;
     }
+
+    public void add(Member member) {
+        members.add(member);
+    }
 }
