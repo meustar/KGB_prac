@@ -1,11 +1,15 @@
 package org.motivation;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
 
     private Scanner sc;
-    private int lastmotivationId = 1;
+    private int lastMotivationId = 0;
+
+    List<Motivation> motivations = new ArrayList<>();
 
     public App(Scanner sc) {
         this.sc = sc;
@@ -16,7 +20,6 @@ public class App {
         while (true) {
             System.out.print("명령어)  ");
             String cmd = sc.nextLine().trim();
-            int id = lastmotivationId;
 
             if (cmd.equals("exit")) {
                 System.out.println(" == Motivation 종료 == ");
@@ -27,14 +30,36 @@ public class App {
             }
 
             if (cmd.equals("add")) {
-                System.out.print("motivation : ");
-                String motivation = sc.nextLine();
+                int id = lastMotivationId + 1;
+                System.out.print("body : ");
+                String body = sc.nextLine();
                 System.out.print("source : ");
                 String source = sc.nextLine();
+
+                Motivation motivation = new Motivation(id, body, source);
+
                 System.out.println(id + "번 motivation이 등록 되었습니다.");
-                lastmotivationId ++;
+                lastMotivationId ++;
+
+                motivations.add(motivation);
+
+
+            } else if (cmd.equals("list")) {
+                System.out.println(" == motivation list == ");
+                System.out.print("   id   //    motivation   //       source        \n");
+                System.out.println("=".repeat(50));
+
+//                for (Motivation motivation : motivations) {
+//                    System.out.println(motivation.toString());
+//                }
+
+                if (motivations.isEmpty()) {
+                    System.out.println("등록된 motivation이 없습니다.");
+                } else {
+                    System.out.println("있음");
+                    System.out.println("등록된 motivation 갯수 : " + motivations.size());
+                }
             }
         }
-
     }
 }
