@@ -45,19 +45,17 @@ public class App {
 
 
             } else if (cmd.equals("list")) {
+                if (motivations.isEmpty()) {
+                    System.out.println("등록된 motivation이 없습니다.");
+                    continue;
+                }
                 System.out.println(" == motivation list == ");
                 System.out.print("   id   //    motivation   //       source        \n");
                 System.out.println("=".repeat(50));
 
-//                for (Motivation motivation : motivations) {
-//                    System.out.println(motivation.toString());
-//                }
-
-                if (motivations.isEmpty()) {
-                    System.out.println("등록된 motivation이 없습니다.");
-                } else {
-                    System.out.println("있음");
-                    System.out.println("등록된 motivation 갯수 : " + motivations.size());
+                for (int i = motivations.size() - 1; i >= 0; i--) {
+                    Motivation motivation = motivations.get(i);
+                    System.out.printf("    %d   //       %s       //        %s          \n", motivation.getId(), motivation.getBody(), motivation.getSource());
                 }
             }
         }
