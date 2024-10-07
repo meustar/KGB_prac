@@ -6,6 +6,7 @@ import java.util.Map;
 public class Rq {
     private String actionMethod;
     private Map<String, String> params;
+    private String errMsg = "";
 
     //Rq = Reqeust (요청)
     public Rq(String cmd) {
@@ -31,6 +32,10 @@ public class Rq {
         for(String paramStr : paramBits) {
             String[] paramStrBits = paramStr.split("=", 2);
             String key = paramStrBits[0];
+            if (key.equals("id") == false) {
+                System.out.println("오타가 있습니다.(id)");
+                errMsg = "오타가 있습니다.(id)";
+            }
             String value = paramStrBits[1];
             params.put(key, value);
         }
@@ -45,4 +50,17 @@ public class Rq {
         // key를 넣으면 해당 value를 얻을수 있음.
         return params.get(paramName);
     }
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    @Override
+    public String toString() {
+        return "Rq{" +
+                "actionMethod='" + actionMethod + '\'' +
+                ", params=" + params +
+                '}';
+    }
+
 }
