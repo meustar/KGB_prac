@@ -77,6 +77,39 @@ public class MotivationController {
         System.out.println(id + "번 motivation을 삭제했습니다.");
     }
 
+    public void edit(Rq rq) {
+        System.out.println(" == motivation edit == ");
+        int id;
+        try {
+            id = Integer.parseInt(rq.getParams("id"));
+        } catch (NumberFormatException e ) {
+            System.out.println("정수 입력 오류");
+            return;
+        }
+
+        Motivation motivation = findById(id);
+
+        if ( motivation == null) {
+            System.out.println(id + "번 motivation은 없습니다.");
+            return;
+        }
+        // 불러온 motivation의 인스턴스 변수에 접근.
+        System.out.println("source : " + motivation.getSource());
+        System.out.println("body : " + motivation.getBody());
+
+        System.out.print("new source : ");
+        String source = Container.getScanner().nextLine();
+        System.out.print("new body : ");
+        String body = Container.getScanner().nextLine();
+
+        // motivation의 인스턴스변수 수정.
+        motivation.setSource(source);
+        motivation.setBody(body);
+
+        System.out.println(id + "번 motivation을 수정했습니다.");
+    }
+
+    // 입력된 id와 일치하는 motivation 찾기
     private Motivation findById(int id) {
         for (Motivation motivation : motivations) {
             if(motivation.getId() == id) {
