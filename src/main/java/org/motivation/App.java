@@ -31,12 +31,12 @@ public class App {
 
             if (cmd.equals("add")) {
                 int id = lastMotivationId + 1;
-                System.out.print("body : ");
-                String body = sc.nextLine();
                 System.out.print("source : ");
                 String source = sc.nextLine();
+                System.out.print("body : ");
+                String body = sc.nextLine();
 
-                Motivation motivation = new Motivation(id, body, source);
+                Motivation motivation = new Motivation(id, source, body);
 
                 System.out.println(id + "번 motivation이 등록 되었습니다.");
                 lastMotivationId ++;
@@ -50,12 +50,18 @@ public class App {
                     continue;
                 }
                 System.out.println(" == motivation list == ");
-                System.out.print("   id   //    motivation   //       source        \n");
+                System.out.print("   id   //        source        //              body            \n");
                 System.out.println("=".repeat(50));
 
                 for (int i = motivations.size() - 1; i >= 0; i--) {
                     Motivation motivation = motivations.get(i);
-                    System.out.printf("    %d   //       %s       //        %s          \n", motivation.getId(), motivation.getBody(), motivation.getSource());
+
+                    if (motivation.getSource().length() > 7) {
+                        System.out.printf("    %d   //       %s       //        %s          \n", motivation.getId(), motivation.getSource().substring(0, 5) + "...", motivation.getBody());
+                        continue;
+                    }
+
+                    System.out.printf("    %d   //       %s       //        %s          \n", motivation.getId(), motivation.getSource(), motivation.getBody());
                 }
             }
         }

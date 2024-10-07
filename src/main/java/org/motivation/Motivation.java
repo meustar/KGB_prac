@@ -3,13 +3,13 @@ package org.motivation;
 
 public class Motivation {
     private int id;
-    private String body;
     private String source;
+    private String body;
 
-    public Motivation(int id, String body, String source) {
+    public Motivation(int id, String source, String body) {
         this.id = id;
-        this.body = body;
         this.source = source;
+        this.body = body;
     }
 
     public int getId() {
@@ -40,8 +40,8 @@ public class Motivation {
     public String toString() {
         return "Motivation{" +
                 "id=" + id +
-                ", body='" + body + '\'' +
                 ", source='" + source + '\'' +
+                ", body='" + body + '\'' +
                 '}';
     }
 }
