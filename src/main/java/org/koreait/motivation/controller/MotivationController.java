@@ -53,4 +53,8 @@ public class MotivationController {
             System.out.printf("    %d   //       %s       //        %s          \n", motivation.getId(), motivation.getSource(), motivation.getBody());
         }
     }
+
+    public void delete(String cmd) {
+
+    }
 }
