@@ -1,14 +1,12 @@
 package org.koreait;
 
-import java.util.Scanner;
-
 public class main {
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        Container.init();
 
-        new App(sc).run();
+        new App().run();
 
-        sc.close();
+        Container.close();
     }
 }
