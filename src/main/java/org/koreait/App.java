@@ -1,4 +1,6 @@
-package org.motivation;
+package org.koreait;
+
+import org.koreait.motivation.entity.Motivation;
 
 import java.util.ArrayList;
 import java.util.List;
