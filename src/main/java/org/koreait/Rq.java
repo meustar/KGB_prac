@@ -17,6 +17,10 @@ public class Rq {
 
         params = new HashMap<>();
 
+        if (cmdBits.length == 1) {
+            return;
+        }
+
         try {
             paramBits = cmdBits[1].split("&");
         } catch (ArrayIndexOutOfBoundsException e) {
