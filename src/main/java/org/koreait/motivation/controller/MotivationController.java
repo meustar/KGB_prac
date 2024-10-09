@@ -3,35 +3,27 @@ package org.koreait.motivation.controller;
 import org.koreait.Container;
 import org.koreait.Rq;
 import org.koreait.motivation.entity.Motivation;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.koreait.motivation.service.MotivationService;
 
 public class MotivationController {
 
-    int lastMotivationId;
-    List<Motivation> motivations;
+    private MotivationService motivationService;
+
     Rq rq;
 
     public MotivationController() {
-        lastMotivationId = 0;
-        motivations = new ArrayList<>();
+        motivationService =  new MotivationService();
     }
 
     public void add() {
-        int id = lastMotivationId + 1;
         System.out.print("source : ");
         String source = Container.getScanner().nextLine();
         System.out.print("body : ");
         String body = Container.getScanner().nextLine();
 
-        Motivation motivation = new Motivation(id, source, body);
-        motivations.add(motivation);
+        int id = motivationService.add(source, body);
 
         System.out.println(id + "번 motivation이 등록 되었습니다.");
-        lastMotivationId ++;
-
-
 
     }
 
