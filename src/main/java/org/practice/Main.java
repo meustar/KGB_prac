@@ -11,13 +11,11 @@ public class Main {
         System.out.println("== 프로그램 시작 ==");
 
         int lastArticleId = 0;
-        List<Article> articles;
+        List<Article> articles = new ArrayList<>();
 
         while(true) {
             System.out.print("명령어 :  ");
             String cmd = sc.nextLine().trim();
-
-            articles = new ArrayList<>();
 
             if (cmd.length() == 0) {
                 System.out.println("명령어를 입력해주세요");
@@ -54,7 +52,7 @@ public class Main {
             } else if (cmd.startsWith("article detail")) {
                 System.out.println("== 게시글 상세보기 ==");
 
-                int id = Integer.parseInt(cmd.split("")[2]);
+                int id = Integer.parseInt(cmd.split(" ")[2]);
 
                 Article foundArticle = null;
 
@@ -76,7 +74,7 @@ public class Main {
             } else if (cmd.startsWith("article delete")) {
                 System.out.println("== 게시글 삭제 ==");
 
-                int id = Integer.parseInt(cmd.split("")[2]);
+                int id = Integer.parseInt(cmd.split(" ")[2]);
 
                 Article foundArticle = null;
 
@@ -95,10 +93,10 @@ public class Main {
                 articles.remove(foundArticle);
                 System.out.println(id + "번 게시글이 삭제되었습니다.");
 
-            } else if (cmd.startsWith("article modifty")) {
+            } else if (cmd.startsWith("article modify")) {
                 System.out.println("== 게시글 수정 ==");
 
-                int id = Integer.parseInt(cmd.split("")[2]);
+                int id = Integer.parseInt(cmd.split(" ")[2]);
 
                 Article foundArticle = null;
 
@@ -114,18 +112,28 @@ public class Main {
                     continue;
                 }
 
-                articles.remove(foundArticle);
-                System.out.println(id + "번 게시글이 삭제되었습니다.");
+                System.out.println("제목 : " + foundArticle.getTitle());
+                System.out.println("제목 : " + foundArticle.getBody());
+                System.out.print("새 제목 : ");
+                String newtitle = sc.nextLine();
+                System.out.print("새 내용 : ");
+                String newbody = sc.nextLine();
+                System.out.println(id + "번 게시글이 수정되었습니다.");
 
+                foundArticle.setTitle(newtitle);
+                foundArticle.setBody(newbody);
+
+            } else {
+                System.out.println("사용할 수 없는 명령어 입니다.");
             }
+        }
 
             System.out.println("== 프로그램 종료 ==");
             sc.close();
-
-        }
+    }
 }
 
-public class Article {
+class Article {
     private int id;
     private String title;
     private String body;
